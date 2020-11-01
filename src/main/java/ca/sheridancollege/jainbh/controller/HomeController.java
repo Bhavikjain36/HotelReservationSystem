@@ -101,7 +101,7 @@ public class HomeController {
 	public String insertHotel(Model model, @RequestParam String search, Authentication authentication, @PathVariable String username) {
 
 		String name = authentication.getName();
-		GooglePlaces client = new GooglePlaces("AIzaSyBYECHZyoJCg0SVF0L67oS0xSki8hPGs7M");
+		GooglePlaces client = new GooglePlaces("XXXXXXXX");
 		List<Place> places = client.getPlacesByQuery(search, GooglePlaces.MAXIMUM_RESULTS);
 		
 		Place hotelInfo = null;{
