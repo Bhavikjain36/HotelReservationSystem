@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>Hotels</title>
+<script>
+	function display() {
+		document.getElementById("test").style.display = "block";
+	}
+</script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+	integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+	crossorigin="anonymous">
+</head>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style>
+.cardt {
+	box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.2);
+	transition: 0.3s;
+	width: 70%;
+	border-radius: 5px;
+}
+
+.card:hover {
+	box-shadow: 0 8px 16px 0 #3366ff;
+}
+
+img {
+	border-radius: 5px 5px 0 0;
+}
+
+.containert {
+	padding: 2px 16px;
+}
+</style>
+</head>
+
+<body class="bg-secondary text-white">
+
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+		<div
+			class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item"><a class="nav-link">Welcome:
+						[[${name}]]</a>
+				<li class="nav-item"><a class="nav-link disabled"
+					href="/displayHotel">Hotels</a></li>
+				<li class="nav-item"><a class="nav-link disabled"
+					href="/displayHotel">> Available Rooms</a></li>
+				<li class="nav-item"><a class="nav-link disabled">>
+						Reservation</a></li>
+				<li class="nav-item"><a class="nav-link disabled">> Payment</a></li>
+				<li class="nav-item"><a class="nav-link active">> Booking
+						Summary</a></li>
+			</ul>
+		</div>
+		<div class="navbar-collapse collapse w-90 order-3 dual-collapse2">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a class="nav-link" th:href="@{/logout}">Logout</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	
+	<div class="container"><br><br>
+	<table style="width: 85%; border-collapse: collapse">
+		<tr style="border:none">
+			<td style="width: 100%">
+				<div class="card-group text-dark" style="margin-left: 200px">
+					<div class="card">
+						<div class="card-header bg-dark text-white">
+							<b>Reservation Receipt</b>
+						</div>
+						<div class="card-body">
+							<span th:each="hotel:${hotelDetails}">
+								<h5 class="card-title" th:text="${hotel.name}"></h5>
+							</span>
+							<hr size="10">
+							<div th:each="reservation:${reservationDetails}">
+								<p class="card-text">Check-In Date :
+									[[${reservation.checkin}]]</p>
+								<p class="card-text">Check-Out Date :
+									[[${reservation.checkout}]]</p>
+								
+							    
+							<hr size="10">
+							<div th:each="room:${roomDetails}">
+								<p class="card-text">Room Type : [[${room.roomtype}]]</p>
+								<p class="card-text">No. of #Nights : [[${reservation.nights}]] Nights</p>
+								<p class="card-text">Cost Per Night ($) : $[[${room.cost}]]</p>
+								<p class="card-text">Total Amount: <b th:with="result=${room.cost * reservation.nights}"><span>$[[${result}]]</span><br></b></p>
+								<hr size="10">
+							</div>
+							<div th:each="payment:${paymentDetails}">
+								<p class="card-text">Card Holder : [[${payment.cardholder}]]</p>
+								<p class="card-text">Card Number: [[${payment.cardnumber}]]</p>
+							</div>
+							</div>
+						</div>
+						<div class="card-footer text-center">
+							<a class="btn bg-dark text-white" th:href="@{/search}">Book another hotel</a>
+							<a class="btn bg-dark text-white" th:href="@{/viewBooking}">View Booking</a>
+							<a class="btn bg-dark text-white" th:href="@{/logout}">Logout</a>
+						</div>
+					</div>
+
+				</div>
+			</td>
+		</tr>
+	</table>
+	</div>
+</body>
+</html>

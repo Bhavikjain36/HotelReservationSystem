@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Reservation</title>
+<script>
+	function terms_changed(termsCheckBox) {
+		if (termsCheckBox.checked) {
+			document.getElementById("confirm").disabled = false;
+			document.getElementById("error").innerHTML = "";
+		} else {
+			document.getElementById("confirm").disabled = true;
+			document.getElementById("error").innerHTML = "* Please accept terms and conditions";
+			document.getElementById("error").style.color = "red";
+		}
+	}
+</script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body class="bg-secondary">
+
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+		<div
+			class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item"><a class="nav-link">Welcome:
+						[[${name}]]</a></li>
+
+				<li class="nav-item"><a class="nav-link disabled"
+					href="/displayHotel"> Hotels</a></li>
+				<li class="nav-item"><a class="nav-link disabled"
+					href="/displayHotel">> Available Rooms</a></li>
+				<li class="nav-item"><a class="nav-link active">>
+						Reservation</a></li>
+				<li class="nav-item"><a class="nav-link disabled">> Payment</a>
+				</li>
+				<li class="nav-item"><a class="nav-link disabled">> Booking
+						Summary</a></li>
+			</ul>
+		</div>
+		<div class="navbar-collapse collapse w-90 order-3 dual-collapse2">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a class="nav-link" th:href="@{/logout}">Logout</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div th:each="hotel : ${hotelDetails}">
+		<div class="container bg-secondary">
+			<form method="post" th:action="@{'/insertReservation/'+${hotel.id}}">
+				<div class="card" style="margin-top: 30px">
+					<div class="card-header bg-dark text-white">
+						<b>Choose Reservation Dates</b>
+					</div>
+					<div class="card-body">
+						<div class="card-text">
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="name"><b>Full Name</b></label> <input type="text"
+										class="form-control" name="name" id="name" required>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="contact"><b>Phone Number</b></label> <input
+										type="number" class="form-control" name="contactno"
+										id="contact" required>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="inputIn"><b>Check in date</b></label> <input
+										type="date" class="form-control" min="2019-07-18"
+										name="checkin" id="test" required>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="inputOut"><b>Check out date</b></label> <input
+										type="date" class="form-control" min="2020-04-11" name="checkout" id="test"
+										 required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="checkIn"><b>Estimated Check in time</b></label> <select
+									class="form-control" name="checkintime">
+									<option>9 AM</option>
+									<option>10 AM</option>
+									<option>11 AM</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<br>
+
+				<div class="card">
+					<div class="card-header bg-dark text-white">
+						<b>Terms and Conditions</b>
+					</div>
+					<div class="card-body">
+						<div class="card-text">
+							<p class="card-text">Terms and conditions, as may be amended
+								from time to time, apply to all our services directly or
+								indirectly (through distributors) made available online, through
+								any mobile device, by email or by telephone</p>
+							<div class="form-group">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="gridCheck"
+										onclick="terms_changed(this)"> <label
+										class="form-check-label" for="gridCheck">I agree to
+										all terms and conditions! </label><br>
+									<p id="error" style="color: red">* Please accept terms and
+										conditions.</p>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="input-group-append">
+					<button class="btn bg-dark text-white" id="confirm" type="submit"
+						disabled>Confirm</button>
+				</div>
+			</form>
+			<br> <br>
+		</div>
+	</div>
+	<script>
+		var today = new Date();
+
+		var dd = today.getDate();
+		var mm = today.getMonth() + 1; //January is 0!
+		var yyyy = today.getFullYear();
+
+		if (dd < 10) {
+			dd = '0' + dd
+		}
+		if (mm < 10) {
+			mm = '0' + mm
+		}
+
+		today = yyyy + '-' + mm + '-' + dd;
+		document.getElementById("test").setAttribute("min", today);
+	</script>
+</body>
+</html>

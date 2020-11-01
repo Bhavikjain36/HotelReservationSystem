@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+
+    <meta charset="ISO-8859-1">
+    <title>Register Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="../static/js/script.js" th:src="@{/js/script.js}"></script>
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/mycss.css" th:href="@{/css/mycss.css}" />
+</head>
+
+<body class="bg-secondary text-white">
+    <h1 class="jumbotron bg-secondary text-white text-center">Register Here!</h1>
+
+    <div class="container">
+
+        <div id="error" class="alert"></div>
+		
+		<form name="form" action="#" th:action="@{/register}" method="post" onsubmit="return verify()">
+  				<div class="row">
+    				<div class="col">
+      					<input type="text" class="form-control" name="username" placeholder="Enter your new username!">
+    				</div>			
+    				<div class="col">
+      					<input type="password" class="form-control" name="password" placeholder="Create a new password">
+    				</div>
+    				<div class="col">
+      					<input type="password" class="form-control" name="verifyPassword" placeholder="Re-enter your password">
+    				</div>
+  				</div><br>
+  				
+  				<div class="row">
+    				<div class="col">
+      					<button class="btn btn-dark form-control" type="submit" id="test" name="login-submit">Sign Up</button>
+    				</div>	
+    				<div class="col">
+      					<a class="btn btn-dark form-control" href="/login" th:href="@{/login}">Login Page</a>
+    				</div>
+    				<div class="col">
+      					<a class="btn btn-dark form-control" href="/" th:href="@{/}">Welcome Page</a>
+    				</div>
+  				</div>
+			</form>
+			
+    </div>
+
+</body>
+</html>

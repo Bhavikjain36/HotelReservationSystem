@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<script>
+	function update(){
+		
+		if (document.getElementById("select").value == "LUXURY"){
+			document.getElementById("bedss").value = "3 BEDS";
+			document.getElementById("costs").value = "125.00";
+	    }     
+	    else if (document.getElementById("select").value == "VIP") {
+	        document.getElementById("bedss").value = "4 BEDS";
+	        document.getElementById("costs").value = "155.00";
+	    }else{
+	    	document.getElementById("bedss").value = "2 BEDS";
+	    	document.getElementById("costs").value = "95.00";
+	    }     
+	}
+</script>
+<meta>
+<title>Available Rooms</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body class="bg-secondary text-white">
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link">Welcome: [[${name}]]</a>
+            </li>
+           
+            <li class="nav-item">
+                <a class="nav-link disabled" href="/displayHotel" > Hotels</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/displayHotel">> Available Rooms</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled">> Reservation</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled">> Payment</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled">> Booking Summary</a>
+            </li>
+        </ul>
+    </div>
+    <div class="navbar-collapse collapse w-90 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/logout}">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<br><br>
+<div  th:each=" hotel: ${hotelList}">
+<div class="card bg-dark mb-3" style="max-width: 25rem;margin-left:130px;margin-top:10px">
+  <div class="card-header" style="font-size:20px"><b>Hotel Summary</b></div>
+  <div class="card-body bg-light text-dark">
+    <p class="card-text">Hotel Name - [[${hotel.name}]]</p>
+    <p class="card-text">Contact - [[${hotel.phone}]]</p>
+    <p class="card-text">Hotel Rating - [[${hotel.review}]]</p>
+  
+  </div>
+</div>
+
+<form method="post" th:action="@{'/insertRoomDetails/'+${hotel.id}}">
+	<table class="table" style="width: 800px; margin-left: 130px">
+
+		<thead class="thead-dark text-white">
+			<tr>
+				<td><h4>Available Rooms</h4></td>
+			</tr>
+			<tr>
+				<th scope="col">Room Type</th>
+				<th scope="col">#Beds</th>
+				<th scope="col">Cost Per Night($)</th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td scope="row"><select class="form-control" name="Roomtype"
+					id="select" onchange="update()">
+						<option
+							th:each="select : ${T(ca.sheridancollege.jainbh.beans.RoomType).values()}"
+							th:value="${select}" th:text="${select}"></option>
+				</select></td>
+				<td>
+				<input class="form-control" id="bedss"  value="3 BEDS" type="text" name="bed" readonly>
+				</td>
+				<td>
+				<input class="form-control" id="costs"  value="125.00" type="text" name="cost" readonly>
+				<td><div class="input-group-append">
+   			 <button class="btn btn-dark" type="submit">Book</button></div></td>
+			</tr>
+		</tbody>
+
+	</table>
+</form>
+</div>
+</body>
+</html>
